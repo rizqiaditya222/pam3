@@ -1,6 +1,7 @@
 package com.example.recycler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaViewHolder> {
-    LayoutInflater inflater;
-    Context _context;
-    ArrayList<Mahasiswa> data;
+    final LayoutInflater inflater;
+    final Context context;
+    final ArrayList<Mahasiswa> data;
 
-    public MahasiswaAdapter(Context _context, ArrayList<Mahasiswa> data) {
-        this._context = _context;
+    public MahasiswaAdapter(Context context, ArrayList<Mahasiswa> data) {
+        this.context = context;
         this.data = data;
-        this.inflater = LayoutInflater.from(this._context);
+        this.inflater = LayoutInflater.from(this.context);
     }
 
     @NonNull
@@ -33,17 +34,25 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
     @Override
     public void onBindViewHolder(@NonNull MahasiswaViewHolder holder, int position) {
         Mahasiswa mhs = data.get(position);
-        Log.d(MainActivity.TAG,"data "+position);
-        Log.d(MainActivity.TAG,"nim "+mhs.nim);
-        Log.d(MainActivity.TAG,"nama "+mhs.nama);
+        Log.d(MainActivity.TAG, "data " + position);
+        Log.d(MainActivity.TAG, "nim " + mhs.nim);
+        Log.d(MainActivity.TAG, "nama " + mhs.nama);
 
         holder.tvNim.setText(mhs.nim);
         holder.tvNama.setText(mhs.nama);
+
+        // Klik item RecyclerView untuk berpindah ke Activity2
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, Activity2.class);
+            intent.putExtra("nim", mhs.nim);
+            intent.putExtra("nama", mhs.nama);
+            context.startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
-        Log.d(MainActivity.TAG,"Jumlah data "+data.size());
+        Log.d(MainActivity.TAG, "Jumlah data " + data.size());
         return data.size();
     }
 
