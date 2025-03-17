@@ -41,7 +41,6 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         holder.tvNim.setText(mhs.nim);
         holder.tvNama.setText(mhs.nama);
 
-        // Klik item RecyclerView untuk berpindah ke Activity2
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, Activity2.class);
             intent.putExtra("nim", mhs.nim);
